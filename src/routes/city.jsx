@@ -1,10 +1,23 @@
-import { Form, useLoaderData } from "react-router-dom";
-import { getCity } from "../cities";
+import { Form, useLoaderData, useFetcher } from "react-router-dom";
+import { getCity, updateCity } from "../cities";
 import placeHolder from "../assets/images/placeholder.png";
 
 export async function loader({ params }) {
   const city = await getCity(params.cityId);
+  if (!city) {
+    throw new Response("", {
+      status: 404,
+      statusText: "Not Found",
+    });
+  }
   return { city };
+}
+
+export async function action({ request, params }) {
+  let formData = await request.formData();
+  return updateCity(params.cityId, {
+    favorite: formData.get("favorite") === "true",
+  });
 }
 
 export default function City() {
@@ -58,7 +71,9 @@ export default function City() {
             action="destroy"
             onSubmit={(event) => {
               if (
-                !window.confirm("Please confirm you want to delete this record.")
+                !window.confirm(
+                  "Please confirm you want to delete this record."
+                )
               ) {
                 event.preventDefault();
               }
@@ -75,10 +90,13 @@ export default function City() {
 }
 
 function Favorite({ city }) {
-  // yes, this is a `let` for later
+  const fetcher = useFetcher();
   let favorite = city?.favorite;
+  if (fetcher.formData) {
+    favorite = fetcher.formData.get("favorite") === "true";
+  }
   return (
-    <Form method="post">
+    <fetcher.Form method="post">
       <button
         name="favorite"
         value={favorite ? "false" : "true"}
@@ -86,6 +104,6 @@ function Favorite({ city }) {
       >
         {favorite ? "★" : "☆"}
       </button>
-    </Form>
+    </fetcher.Form>
   );
 }

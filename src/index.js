@@ -10,7 +10,10 @@ import Index from "./routes/index";
 import ErrorPage from "./error-page";
 import EditCity, { action as editAction } from "./routes/edit";
 import { action as destroyAction } from "./routes/destroy";
-import City, { loader as cityLoader } from "./routes/city";
+import City, {
+  loader as cityLoader,
+  action as cityAction,
+} from "./routes/city";
 
 import "./index.css";
 
@@ -22,24 +25,30 @@ const router = createBrowserRouter([
     loader: rootLoader,
     action: rootAction,
     children: [
-      { index: true, element: <Index /> },
       {
-        path: "cities/:cityId",
-        element: <City />,
-        errorElement: <div>Oops! There was an error.</div>,
-        loader: cityLoader,
-      },
-      {
-        path: "cities/:cityId/edit",
-        element: <EditCity />,
-        errorElement: <div>Oops! There was an error.</div>,
-        loader: cityLoader,
-        action: editAction,
-      },
-      {
-        path: "cities/:cityId/destroy",
-        action: destroyAction,
-        errorElement: <div>Oops! There was an error.</div>,
+        errorElement: <ErrorPage />,
+        children: [
+          { index: true, element: <Index /> },
+          {
+            path: "cities/:cityId",
+            element: <City />,
+            errorElement: <div>Oops! There was an error.</div>,
+            loader: cityLoader,
+            action: cityAction,
+          },
+          {
+            path: "cities/:cityId/edit",
+            element: <EditCity />,
+            errorElement: <div>Oops! There was an error.</div>,
+            loader: cityLoader,
+            action: editAction,
+          },
+          {
+            path: "cities/:cityId/destroy",
+            action: destroyAction,
+            errorElement: <div>Oops! There was an error.</div>,
+          },
+        ],
       },
     ],
   },

@@ -2,8 +2,8 @@ import localforage from "localforage";
 import { matchSorter } from "match-sorter";
 import sortBy from "sort-by";
 
-export async function getcities(query) {
-  await fakeNetwork(`getcities:${query}`);
+export async function getCities(query) {
+  await fakeNetwork(`getCities:${query}`);
   let cities = await localforage.getItem("cities");
   if (!cities) cities = [];
   if (query) {
@@ -16,7 +16,7 @@ export async function createCity() {
   await fakeNetwork();
   let id = Math.random().toString(36).substring(2, 9);
   let city = { id, createdAt: Date.now() };
-  let cities = await getcities();
+  let cities = await getCities();
   cities.unshift(city);
   await set(cities);
   return city;

@@ -1,14 +1,15 @@
-import { Form, useLoaderData, redirect } from "react-router-dom";
+import { Form, useLoaderData, redirect, useNavigate } from "react-router-dom";
 import { updateCity } from "../cities";
 
 export async function action({ request, params }) {
-    const formData = await request.formData();
-    const updates = Object.fromEntries(formData);
-    await updateCity(params.cityId, updates);
-    return redirect(`/cities/${params.cityId}`);
-  }
+  const formData = await request.formData();
+  const updates = Object.fromEntries(formData);
+  await updateCity(params.cityId, updates);
+  return redirect(`/cities/${params.cityId}`);
+}
 export default function EditCity() {
   const { city } = useLoaderData();
+  const navigate = useNavigate();
 
   return (
     <Form method="post" id="city-form">
@@ -54,7 +55,14 @@ export default function EditCity() {
       </label>
       <p>
         <button type="submit">Save</button>
-        <button type="button">Cancel</button>
+        <button
+          type="button"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          Cancel
+        </button>
       </p>
     </Form>
   );

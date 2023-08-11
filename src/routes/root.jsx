@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   Outlet,
   NavLink,
@@ -5,13 +6,16 @@ import {
   Form,
   redirect,
   useNavigation,
+  useSubmit,
 } from "react-router-dom";
 
-import { getcities, createCity } from "../cities.jsx";
+import { getCities, createCity } from "../cities.jsx";
 
-export async function loader() {
-  const cities = await getcities();
-  return { cities };
+export async function loader({ request }) {
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q");
+  const cities = await getCities(q);
+  return { cities, q };
 }
 
 export async function action() {
@@ -20,8 +24,20 @@ export async function action() {
 }
 
 export default function Root() {
-  const { cities } = useLoaderData();
+  const { cities, q } = useLoaderData();
   const navigation = useNavigation();
+  const submit = useSubmit();
+
+  const searching =
+    navigation.location &&
+    new URLSearchParams(navigation.location.search).has(
+      "q"
+    );
+
+  useEffect(() => {
+    document.getElementById("q").value = q;
+  }, [q]);
+
   return (
     <>
       <div id="sidebar">
@@ -31,12 +47,20 @@ export default function Root() {
             <label htmlFor="q">Search cities:</label>
             <input
               id="q"
+              className={searching ? "loading" : ""}
               aria-label="Search cities"
               placeholder="Search"
               type="search"
               name="q"
+              defaultValue={q}
+              onChange={(event) => {
+                const isFirstSearch = q == null;
+                submit(event.currentTarget.form, {
+                  replace: !isFirstSearch,
+                });
+              }}
             />
-            <div id="search-spinner" aria-hidden="true" hidden />
+            <div id="search-spinner" aria-hidden hidden={!searching}  />
             <div className="sr-only" aria-live="polite"></div>
           </form>
           <Form method="post">
