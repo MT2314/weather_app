@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "clear-view-cast"
-  }
+    "default": "clear-view-cast",
+    "production": "clear-view-weather"
+  },
+  "targets": {},
+  "etags": {}
 }

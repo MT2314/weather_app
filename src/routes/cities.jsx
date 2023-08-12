@@ -1,28 +1,24 @@
 import localforage from "localforage";
 import { matchSorter } from "match-sorter";
 import sortBy from "sort-by";
+import {getWeather} from "../data/getWeather.js";
 
-export async function getCities(query) {
-  await fakeNetwork(`getCities:${query}`);
-  let cities = await localforage.getItem("cities");
-  if (!cities) cities = [];
-  if (query) {
-    cities = matchSorter(cities, query, { keys: ["first", "last"] });
-  }
-  return cities.sort(sortBy("last", "createdAt"));
+
+
+export async function loadCity(id) {
+  console.log("loaded city",id);
+  // await fakeNetwork(`city:${id}`);
+  // await getWeather(`getCities:${query}`);
+  // let cities = await localforage.getItem("cities");
+  // if (!cities) cities = [];
+  // if (query) {
+  //   cities = matchSorter(cities, query, { keys: ["first", "last"] });
+  // }
+  let cityWeather = await getWeather(id);
+  return cityWeather;
 }
 
-export async function createCity() {
-  await fakeNetwork();
-  let id = Math.random().toString(36).substring(2, 9);
-  let city = { id, createdAt: Date.now() };
-  let cities = await getCities();
-  cities.unshift(city);
-  await set(cities);
-  return city;
-}
-
-export async function getCity(id) {
+export async function request(id) {
   await fakeNetwork(`city:${id}`);
   let cities = await localforage.getItem("cities");
   let city = cities.find((city) => city.id === id);

@@ -9,30 +9,33 @@ import {
   useSubmit,
 } from "react-router-dom";
 
-import { getCities, createCity } from "../cities.jsx";
+import { loadCity } from "./cities.jsx";
 
 export async function loader({ request }) {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
-  const cities = await getCities(q);
-  return { cities, q };
+  return { q };
 }
 
-export async function action() {
-  const city = await createCity();
-  return redirect(`/cities/${city.id}/edit`);
+export async function action({ request, params }) {
+  // let formData = await request.formData();
+  // console.log("Root", formData);
+  const cityWeather = await loadCity()
+  console.log("Root", cityWeather);
+
+  console.log(cityWeather.city);
+  // return redirect(`/cities/${cityWeather.id}`);
+  return null;
 }
 
 export default function Root() {
-  const { cities, q } = useLoaderData();
+  const { q } = useLoaderData();
   const navigation = useNavigation();
   const submit = useSubmit();
 
   const searching =
     navigation.location &&
-    new URLSearchParams(navigation.location.search).has(
-      "q"
-    );
+    new URLSearchParams(navigation.location.search).has("q");
 
   useEffect(() => {
     document.getElementById("q").value = q;
@@ -41,7 +44,7 @@ export default function Root() {
   return (
     <>
       <div id="sidebar">
-        <h1>React Router cities</h1>
+        <h1>Clear Weather</h1>
         <div>
           <form id="search-form" role="search">
             <label htmlFor="q">Search cities:</label>
@@ -53,55 +56,26 @@ export default function Root() {
               type="search"
               name="q"
               defaultValue={q}
-              onChange={(event) => {
+              onSubmit={(event) => {
                 const isFirstSearch = q == null;
                 submit(event.currentTarget.form, {
                   replace: !isFirstSearch,
                 });
               }}
             />
-            <div id="search-spinner" aria-hidden hidden={!searching}  />
+            <div id="search-spinner" aria-hidden hidden={!searching} />
             <div className="sr-only" aria-live="polite"></div>
           </form>
           <Form method="post">
-            <button type="submit">New</button>
+            <button type="submit">Submit</button>
           </Form>
         </div>
-        <nav>
-          {cities.length ? (
-            <ul>
-              {cities.map((city) => (
-                <li key={city.id}>
-                  <NavLink
-                    to={`cities/${city.id}`}
-                    className={({ isActive, isPending }) =>
-                      isActive ? "active" : isPending ? "pending" : ""
-                    }
-                  >
-                    {city.first || city.last ? (
-                      <>
-                        {city.first} {city.last}
-                      </>
-                    ) : (
-                      <i>No Name</i>
-                    )}{" "}
-                    {city.favorite && <span aria-label="Favorite">★</span>}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p tabIndex="0">
-              <i>No cities</i>
-            </p>
-          )}
-        </nav>
       </div>
       <div
         id="detail"
         className={navigation.state === "loading" ? "loading" : ""}
       >
-        <Outlet />
+        <Outlet q={q} />
       </div>
     </>
   );

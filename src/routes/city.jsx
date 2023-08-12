@@ -1,23 +1,28 @@
 import { Form, useLoaderData, useFetcher } from "react-router-dom";
-import { getCity, updateCity } from "../cities";
 import placeHolder from "../assets/images/placeholder.png";
 
 export async function loader({ params }) {
-  const city = await getCity(params.cityId);
-  if (!city) {
-    throw new Response("", {
-      status: 404,
-      statusText: "Not Found",
-    });
-  }
-  return { city };
+  console.assert(params,"cities/:cityId  ---  params", params);
+  console.log("cities/:cityId  ---  params", params);
+  // const city = await getCity(params.cityId);
+  // console.log(city);
+  // if (!city) {
+  //   throw new Response("", {
+  //     status: 404,
+  //     statusText: "Not Found",
+  //   });
+  // }
+  // return { city };
+  return null;
 }
 
 export async function action({ request, params }) {
-  let formData = await request.formData();
-  return updateCity(params.cityId, {
-    favorite: formData.get("favorite") === "true",
-  });
+  console.assert(params);
+
+  // let formData = await request.formData();
+  // return updateCity(params.cityId, {
+  //   favorite: formData.get("favorite") === "true",
+  // });
 }
 
 export default function City() {
