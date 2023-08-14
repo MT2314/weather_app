@@ -14,34 +14,30 @@ export async function loader({ params }) {
 }
 
 const weatherImages = {
-  "clear sky":
-    "https://i.gifer.com/XFbw.gif",
-  "few clouds":
-    "https://i.gifer.com/Lx0q.gif",
-  "scattered clouds":
-    "https://i.gifer.com/QuQ9.gif",
-  "broken clouds":
-    "https://i.gifer.com/QuQ9.gi",
-  "overcast clouds":
-    "https://i.gifer.com/QuQ9.gi",
+  "clear sky": "https://i.gifer.com/XFbw.gif",
+  "few clouds": "https://i.gifer.com/Lx0q.gif",
+  "scattered clouds": "https://i.gifer.com/QuQ9.gif",
+  "broken clouds": "https://i.gifer.com/QuQ9.gif",
+  "overcast clouds": "https://i.gifer.com/QuQ9.gif",
   "shower rain":
     "https://media4.giphy.com/media/qHWAmPd3SWyY0/giphy.gif?cid=ecf05e47bzzk6wmlrqf2pgwex5a4klunitf5xqjkv3wvi82g&ep=v1_gifs_related&rid=giphy.gif&ct=g",
   rain: "https://media4.giphy.com/media/26DMWExfbZSiV0Btm/giphy.gif?cid=ecf05e47o1350m4fqc3a3v3d1o1yxpwd0lif7vr9ewxalwqf&ep=v1_gifs_related&rid=giphy.gif&ct=g",
-  thunderstorm:
-    "https://i.gifer.com/BQS7.gif",
+  thunderstorm: "https://i.gifer.com/BQS7.gif",
   snow: "https://media2.giphy.com/media/WoRqq91KnOuM8/giphy.gif?cid=ecf05e4794uwgejqlxo4gvwvn7vu4ta3lbgnzcsmev17xdb4&ep=v1_gifs_related&rid=giphy.gif&ct=g",
   mist: "https://media4.giphy.com/media/McDhCoTyRyLiE/giphy.gif?cid=ecf05e47nfc0l9flgrd53vjdatsp15swdxfywjrdmvyk4epw&ep=v1_gifs_search&rid=giphy.gif&ct=g",
 };
 
 export default function City() {
   const { city } = useLoaderData();
-  console.log(city);
-  const weatherDescription = city.weather[0].description; // Assuming `weather` is the weather data from the API
+  let weatherDescription = city.weather[0].description; // Assuming `weather` is the weather data from the API
+  if (weatherDescription.includes("rain")) weatherDescription = "rain";
   const imageUrl = weatherImages[weatherDescription];
   return (
     <div id="city">
       <div className="weather-container">
-        <h1 className="weather-title">{city.name} Weather</h1>
+        <h1 className="weather-title">
+          {city.name}, {city.sys.country}
+        </h1>
         <p className="weather-description">{city.weather[0].description}</p>
         <div
           className="section-container"
