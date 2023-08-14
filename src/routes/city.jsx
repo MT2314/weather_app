@@ -15,20 +15,20 @@ export async function loader({ params }) {
 
 const weatherImages = {
   "clear sky":
-    "https://media2.giphy.com/media/c31WXGK1jLQBy/giphy.gif?cid=ecf05e47ocjdg0xsmab23aw87mboiwonku0l9kmbth6evk90&ep=v1_gifs_related&rid=giphy.gif&ct=g",
+    "https://i.gifer.com/XFbw.gif",
   "few clouds":
-    "https://media2.giphy.com/media/c31WXGK1jLQBy/giphy.gif?cid=ecf05e47ocjdg0xsmab23aw87mboiwonku0l9kmbth6evk90&ep=v1_gifs_related&rid=giphy.gif&ct=g",
+    "https://i.gifer.com/Lx0q.gif",
   "scattered clouds":
-    "https://media1.giphy.com/media/PIh4laWJlz9bq/giphy.gif?cid=ecf05e476e1n9ungfharfpmvf1444902jkehsitt9o6veqlb&ep=v1_gifs_related&rid=giphy.gif&ct=g",
+    "https://i.gifer.com/QuQ9.gif",
   "broken clouds":
-    "https://media0.giphy.com/media/HoUgegTjteXCw/giphy.gif?cid=ecf05e477w2ikuad9vxbir078zbu5cbanvinsc08jfh94x4a&ep=v1_gifs_related&rid=giphy.gif&ct=g",
+    "https://i.gifer.com/QuQ9.gi",
   "overcast clouds":
-    "https://media0.giphy.com/media/HoUgegTjteXCw/giphy.gif?cid=ecf05e477w2ikuad9vxbir078zbu5cbanvinsc08jfh94x4a&ep=v1_gifs_related&rid=giphy.gif&ct=g",
+    "https://i.gifer.com/QuQ9.gi",
   "shower rain":
     "https://media4.giphy.com/media/qHWAmPd3SWyY0/giphy.gif?cid=ecf05e47bzzk6wmlrqf2pgwex5a4klunitf5xqjkv3wvi82g&ep=v1_gifs_related&rid=giphy.gif&ct=g",
   rain: "https://media4.giphy.com/media/26DMWExfbZSiV0Btm/giphy.gif?cid=ecf05e47o1350m4fqc3a3v3d1o1yxpwd0lif7vr9ewxalwqf&ep=v1_gifs_related&rid=giphy.gif&ct=g",
   thunderstorm:
-    "https://bestanimations.com/media/storms/1500181574large-storm-cloud-thunder-lighting-bolts-strike-animated-gif.gif",
+    "https://i.gifer.com/BQS7.gif",
   snow: "https://media2.giphy.com/media/WoRqq91KnOuM8/giphy.gif?cid=ecf05e4794uwgejqlxo4gvwvn7vu4ta3lbgnzcsmev17xdb4&ep=v1_gifs_related&rid=giphy.gif&ct=g",
   mist: "https://media4.giphy.com/media/McDhCoTyRyLiE/giphy.gif?cid=ecf05e47nfc0l9flgrd53vjdatsp15swdxfywjrdmvyk4epw&ep=v1_gifs_search&rid=giphy.gif&ct=g",
 };
