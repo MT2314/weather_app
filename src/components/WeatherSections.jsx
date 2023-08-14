@@ -1,26 +1,12 @@
 import React from "react";
 
 const WeatherSection = ({ id, title, icon, details }) => (
-  <div className="accordion-item">
-    <h2 className="accordion-header" id={`heading${id}`}>
-      <button
-        className="accordion-button"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target={`#collapse${id}`}
-        aria-expanded="true"
-        aria-controls={`collapse${id}`}
-      >
-        {title} <i className={icon}></i>
-      </button>
+  <div className="item">
+    <h2 className="header" id={`heading${id}`}>
+      {title} <i className={icon}></i>
     </h2>
-    <div
-      id={`collapse${id}`}
-      className="accordion-collapse collapse"
-      aria-labelledby={`heading${id}`}
-      data-bs-parent="#weatherAccordion"
-    >
-      <div className="accordion-body">
+    <div id={`section-${id}`} aria-labelledby={`heading${id}`}>
+      <div className="body">
         <div className="weather-detail">
           {details.map((detail, index) => (
             <div className="temp-item" key={index}>

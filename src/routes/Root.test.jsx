@@ -6,7 +6,7 @@ import Root from "./root"; // Adjust the import path as needed
 
 test("renders Clear Weather title", () => {
   render(<Root />);
-  const titleElement = screen.getByText(/Clear Weather/i);
+  const titleElement = screen.getByText(/Clear View Weather/i);
   expect(titleElement).toBeInTheDocument();
 });
 

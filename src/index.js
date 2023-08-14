@@ -9,7 +9,6 @@ import Index from "./routes/index";
 import ErrorPage from "./error-page";
 import City, {
   loader as cityLoader,
-  action as cityAction,
 } from "./routes/city";
 
 import "./index.css";
@@ -28,9 +27,8 @@ const router = createBrowserRouter([
           {
             path: "/city/:cityId",
             element: <City />,
-            errorElement: <div>Oops! There was an error.</div>,
+            errorElement: <ErrorPage />,
             loader: cityLoader,
-            action: cityAction,
           },
         ],
       },

@@ -13,20 +13,40 @@ export async function loader({ params }) {
   return { city };
 }
 
-export async function action({ request, params }) {
-  console.assert(params);
-}
+const weatherImages = {
+  "clear sky":
+    "https://media2.giphy.com/media/c31WXGK1jLQBy/giphy.gif?cid=ecf05e47ocjdg0xsmab23aw87mboiwonku0l9kmbth6evk90&ep=v1_gifs_related&rid=giphy.gif&ct=g",
+  "few clouds":
+    "https://media2.giphy.com/media/c31WXGK1jLQBy/giphy.gif?cid=ecf05e47ocjdg0xsmab23aw87mboiwonku0l9kmbth6evk90&ep=v1_gifs_related&rid=giphy.gif&ct=g",
+  "scattered clouds":
+    "https://media1.giphy.com/media/PIh4laWJlz9bq/giphy.gif?cid=ecf05e476e1n9ungfharfpmvf1444902jkehsitt9o6veqlb&ep=v1_gifs_related&rid=giphy.gif&ct=g",
+  "broken clouds":
+    "https://media0.giphy.com/media/HoUgegTjteXCw/giphy.gif?cid=ecf05e477w2ikuad9vxbir078zbu5cbanvinsc08jfh94x4a&ep=v1_gifs_related&rid=giphy.gif&ct=g",
+  "overcast clouds":
+    "https://media0.giphy.com/media/HoUgegTjteXCw/giphy.gif?cid=ecf05e477w2ikuad9vxbir078zbu5cbanvinsc08jfh94x4a&ep=v1_gifs_related&rid=giphy.gif&ct=g",
+  "shower rain":
+    "https://media4.giphy.com/media/qHWAmPd3SWyY0/giphy.gif?cid=ecf05e47bzzk6wmlrqf2pgwex5a4klunitf5xqjkv3wvi82g&ep=v1_gifs_related&rid=giphy.gif&ct=g",
+  rain: "https://media4.giphy.com/media/26DMWExfbZSiV0Btm/giphy.gif?cid=ecf05e47o1350m4fqc3a3v3d1o1yxpwd0lif7vr9ewxalwqf&ep=v1_gifs_related&rid=giphy.gif&ct=g",
+  thunderstorm:
+    "https://bestanimations.com/media/storms/1500181574large-storm-cloud-thunder-lighting-bolts-strike-animated-gif.gif",
+  snow: "https://media2.giphy.com/media/WoRqq91KnOuM8/giphy.gif?cid=ecf05e4794uwgejqlxo4gvwvn7vu4ta3lbgnzcsmev17xdb4&ep=v1_gifs_related&rid=giphy.gif&ct=g",
+  mist: "https://media4.giphy.com/media/McDhCoTyRyLiE/giphy.gif?cid=ecf05e47nfc0l9flgrd53vjdatsp15swdxfywjrdmvyk4epw&ep=v1_gifs_search&rid=giphy.gif&ct=g",
+};
 
 export default function City() {
   const { city } = useLoaderData();
   console.log(city);
+  const weatherDescription = city.weather[0].description; // Assuming `weather` is the weather data from the API
+  const imageUrl = weatherImages[weatherDescription];
   return (
     <div id="city">
       <div className="weather-container">
         <h1 className="weather-title">{city.name} Weather</h1>
         <p className="weather-description">{city.weather[0].description}</p>
-
-        <div className="accordion" id="weatherAccordion">
+        <div
+          className="section-container"
+          style={{ backgroundImage: `url('${imageUrl}')` }}
+        >
           <WeatherSection
             id="temperature"
             title="Temperature"

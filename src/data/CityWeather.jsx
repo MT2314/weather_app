@@ -15,9 +15,7 @@ export const getWeather = async (city = "Toronto") => {
     );
     console.log(response.data);
     return response.data;
-    // temperature: response.data.main.temp,
-    // city: response.data.name,
-    // description: response.data.weather[0].description,
+
   } catch (error) {
     console.error("An error occurred while fetching the weather data:", error);
     throw error;

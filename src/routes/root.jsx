@@ -36,7 +36,7 @@ export default function Root() {
   return (
     <>
       <div id="topbar" className="topbar">
-        <h1 className="topbar-title">Clear Weather</h1>
+        <h1 className="topbar-title">Clear View Weather</h1>
         <div className="search-bar">
           <Form method="post" onSubmit={handleSubmit} className="search-form">
             <label htmlFor="q" className="search-label" hidden>

@@ -217,8 +217,6 @@ form[action$="destroy"] button {
   width: 100%;
 }
 
-
-
 #zero-state {
   margin: 2rem auto;
   text-align: center;
@@ -247,11 +245,11 @@ form[action$="destroy"] button {
   width: 100%;
 }
 
-section{
+section {
   margin: 4rem 0;
 }
 
-section h3{
+section h3 {
   padding-bottom: 1rem;
 }
 
@@ -331,54 +329,120 @@ section h3{
 .temp-item strong {
   margin-right: 10px; /* Space between the label and value */
 }
-.accordion {
+.item {
+  flex-basis: calc(50% - 10px);
+  padding: 15px;
+  margin: 10px;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for item cards */
 }
 
-.accordion-header {
-  background-color: #f1f1f1;
+.header {
+  font-size: 20px;
   color: #333;
-  cursor: pointer;
-  padding: 15px;
-  text-align: left;
-  border: none;
-  outline: none;
-  transition: background-color 0.3s;
+  margin-bottom: 10px;
 }
 
-.accordion-header .bi {
-  margin-left: 10px;
-  font-size: 18px;
+.header i {
+  font-size: 24px;
+  color: #007bff;
 }
 
-.accordion-header:focus,
-.accordion-button:not(.collapsed) {
-  background-color: #e5e5e5;
-}
-
-.accordion-collapse {
-  padding: 0;
-}
-
-.accordion-body {
-  padding: 15px;
+.body {
+  padding: 10px;
 }
 
 .weather-detail {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .temp-item {
   display: flex;
-  justify-content: space-between;
-  padding: 5px;
-  border-bottom: 1px solid #e5e5e5;
+  justify-content: space-around;
+  padding: 15px 10px;
 }
 
-.temp-item:last-child {
-  border-bottom: none;
+/* Responsive design for screens smaller than 768px */
+@media (max-width: 768px) {
+  .temp-item {
+    flex-direction: column; /* Stacks the items vertically on small screens */
+    align-items: center; /* Centers the items horizontally */
+    padding: 10px 5px; /* Reduces padding for small screens */
+  }
+}
+
+.temp-item strong {
+  color: #555;
+  margin-right: 10px;
+}
+
+.section-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f5f5f5;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.section-container::before{
+  opacity: 0.75;
+}
+/* Style for individual sections */
+.item {
+  flex-basis: calc(
+    50% - 10px
+  ); /* Setting the basis for each section to 50% minus a small margin */
+  box-sizing: border-box; /* To include padding and border in the element's total width and height */
+  padding: 2rem; /* Internal padding for each section */
+  margin: 5px; /* External margin for each section */
+}
+
+/* Responsive design for screens smaller than 768px */
+@media (max-width: 768px) {
+  .item {
+    flex-basis: 100%; /* Stacks the sections vertically on small screens */
+  }
+}
+
+
+#error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-center;
+  height: 100%;
+  padding: 2rem;
+  background-color: #fafafa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#error-page h1 {
+  font-size: 2rem;
+  color: #f44250;
+  margin-bottom: 1rem;
+}
+
+#error-page p {
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
+  line-height: 1.5;
+}
+
+#error-page a {
+  color: #3992ff;
+  text-decoration: none;
+}
+
+#error-page a:hover {
+  text-decoration: underline;
+}
+
+#error-page:before {
+  display: block;
+  margin-bottom: 1rem;
+  content: url("data:image/svg+xml,%3Csvg width='50' height='50' ... %3E%3C/svg%3E"); /* Optional: Add an error icon SVG here */
 }
