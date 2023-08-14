@@ -3,7 +3,6 @@ import axios from "axios";
 const API_KEY = "ba74bedfc46d79d1a8bc03cbde9297ec"; // Replace with your OpenWeatherMap API key
 
 const getWeather = async (city = "Toronto") => {
-  console.log(city);
 
   try {
     const response = await axios.get(

@@ -13,7 +13,6 @@ export const getWeather = async (city = "Toronto") => {
     const response = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
     );
-    console.log(response.data);
     return response.data;
 
   } catch (error) {
