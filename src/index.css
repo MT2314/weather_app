@@ -380,3 +380,34 @@ i {
   justify-content: center;
   width: 100%;
 }
+
+.wrapper {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+
+
+/* Today's Weather */
+
+#todayWeather{
+  position: relative;
+  left:20%;
+  top: 20%;
+}
+
+
+.center{
+  margin-left: 50%;
+  margin-right: 50%;
+}
+
+
+/* Five Weather */
+.row-2{
+  position: relative;
+  height:auto;
+  margin-top: 10vh;
+}

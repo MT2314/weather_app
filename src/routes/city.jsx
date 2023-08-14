@@ -1,114 +1,63 @@
-import { Form, useLoaderData, useFetcher } from "react-router-dom";
-import placeHolder from "../assets/images/placeholder.png";
+import { useLoaderData, useFetcher } from "react-router-dom";
+import { loadCity } from "../data/CityWeather";
 
 export async function loader({ params }) {
-  console.assert(params,"cities/:cityId  ---  params", params);
-  console.log("cities/:cityId  ---  params", params);
-  // const city = await getCity(params.cityId);
-  // console.log(city);
-  // if (!city) {
-  //   throw new Response("", {
-  //     status: 404,
-  //     statusText: "Not Found",
-  //   });
-  // }
-  // return { city };
-  return null;
+  const city = await loadCity(params.cityId);
+  if (!city) {
+    throw new Response("", {
+      status: 404,
+      statusText: "Not Found",
+    });
+  }
+  return { city };
 }
 
 export async function action({ request, params }) {
   console.assert(params);
-
-  // let formData = await request.formData();
-  // return updateCity(params.cityId, {
-  //   favorite: formData.get("favorite") === "true",
-  // });
 }
 
 export default function City() {
   const { city } = useLoaderData();
-
+  console.log(city);
   return (
     <div id="city">
-      <header>
+      <h2> {city.city} </h2>
+      <div>
+        <h1>{city.name} Weather</h1>
+        <p>{city.weather[0].description}</p>
         <div>
-          <img
-            key={city?.avatar}
-            src={city?.avatar || placeHolder}
-            alt={`${city?.first} ${city?.last}'s avatar`}
-          />
+          <strong>Temperature:</strong> {city.main.temp}°C
+          <br />
+          <strong>Feels Like:</strong> {city.main.feels_like}°C
+          <br />
+          <strong>Min Temperature:</strong> {city.main.temp_min}°C
+          <br />
+          <strong>Max Temperature:</strong> {city.main.temp_max}°C
         </div>
-      </header>
-      <main>
-        <h1>
-          {city?.first || city?.last ? (
-            <>
-              {city?.first} {city?.last}
-            </>
-          ) : (
-            <i>No Name</i>
-          )}{" "}
-          <Favorite city={city} />
-        </h1>
-
-        {city?.twitter && (
-          <p>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={`https://twitter.com/${city?.twitter}`}
-            >
-              {city?.twitter}
-            </a>
-          </p>
-        )}
-
-        {city?.notes && <p>{city?.notes}</p>}
-
         <div>
-          <Form action="edit">
-            <button type="submit" aria-label="Edit city">
-              Edit
-            </button>
-          </Form>
-          <Form
-            method="post"
-            action="destroy"
-            onSubmit={(event) => {
-              if (
-                !window.confirm(
-                  "Please confirm you want to delete this record."
-                )
-              ) {
-                event.preventDefault();
-              }
-            }}
-          >
-            <button type="submit" aria-label="Delete city">
-              Delete
-            </button>
-          </Form>
+          <strong>Wind Speed:</strong> {city.wind.speed} m/s
+          <br />
+          <strong>Wind Direction:</strong> {city.wind.deg}°
         </div>
-      </main>
+        <div>
+          <strong>Cloudiness:</strong> {city.clouds.all}%
+        </div>
+        <div>
+          <strong>Pressure:</strong> {city.main.pressure} hPa
+          <br />
+          <strong>Humidity:</strong> {city.main.humidity}%
+        </div>
+        <div>
+          <strong>Visibility:</strong> {city.visibility} meters
+        </div>
+        <div>
+          <strong>Sunrise:</strong>{" "}
+          {new Date(city.sys.sunrise * 1000).toLocaleTimeString()}
+          <br />
+          <strong>Sunset:</strong>{" "}
+          {new Date(city.sys.sunset * 1000).toLocaleTimeString()}
+        </div>
+      </div>
     </div>
-  );
-}
-
-function Favorite({ city }) {
-  const fetcher = useFetcher();
-  let favorite = city?.favorite;
-  if (fetcher.formData) {
-    favorite = fetcher.formData.get("favorite") === "true";
-  }
-  return (
-    <fetcher.Form method="post">
-      <button
-        name="favorite"
-        value={favorite ? "false" : "true"}
-        aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
-      >
-        {favorite ? "★" : "☆"}
-      </button>
-    </fetcher.Form>
   );
 }

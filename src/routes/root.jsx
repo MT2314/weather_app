@@ -1,37 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Outlet,
-  NavLink,
   useLoaderData,
   Form,
-  redirect,
   useNavigation,
-  useSubmit,
+  useNavigate,
 } from "react-router-dom";
 
-import { loadCity } from "./cities.jsx";
 
 export async function loader({ request }) {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
+  // You could load city information here based on the query 'q'
   return { q };
 }
-
-export async function action({ request, params }) {
-  // let formData = await request.formData();
-  // console.log("Root", formData);
-  const cityWeather = await loadCity()
-  console.log("Root", cityWeather);
-
-  console.log(cityWeather.city);
-  // return redirect(`/cities/${cityWeather.id}`);
-  return null;
-}
-
 export default function Root() {
   const { q } = useLoaderData();
   const navigation = useNavigation();
-  const submit = useSubmit();
+  const navigate = useNavigate();
 
   const searching =
     navigation.location &&
@@ -41,12 +27,19 @@ export default function Root() {
     document.getElementById("q").value = q;
   }, [q]);
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const city = formData.get("city");
+    navigate(`/city/${city}`);
+  };
+
   return (
     <>
       <div id="sidebar">
         <h1>Clear Weather</h1>
         <div>
-          <form id="search-form" role="search">
+          <Form method="post" onSubmit={handleSubmit}>
             <label htmlFor="q">Search cities:</label>
             <input
               id="q"
@@ -54,19 +47,11 @@ export default function Root() {
               aria-label="Search cities"
               placeholder="Search"
               type="search"
-              name="q"
+              name="city"
               defaultValue={q}
-              onSubmit={(event) => {
-                const isFirstSearch = q == null;
-                submit(event.currentTarget.form, {
-                  replace: !isFirstSearch,
-                });
-              }}
             />
             <div id="search-spinner" aria-hidden hidden={!searching} />
             <div className="sr-only" aria-live="polite"></div>
-          </form>
-          <Form method="post">
             <button type="submit">Submit</button>
           </Form>
         </div>

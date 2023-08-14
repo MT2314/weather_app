@@ -3,7 +3,6 @@ import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Root, {
-  action as rootAction,
   loader as rootLoader,
 } from "./routes/root";
 import Index from "./routes/index";
@@ -21,31 +20,18 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     loader: rootLoader,
-    action: rootAction,
     children: [
       {
         errorElement: <ErrorPage />,
         children: [
           { index: true, element: <Index /> },
           {
-            path: "city/:cityId",
+            path: "/city/:cityId",
             element: <City />,
             errorElement: <div>Oops! There was an error.</div>,
             loader: cityLoader,
             action: cityAction,
           },
-          // {
-          //   path: "cities/:cityId/edit",
-          //   element: <EditCity />,
-          //   errorElement: <div>Oops! There was an error.</div>,
-          //   loader: cityLoader,
-          //   action: editAction,
-          // },
-          // {
-          //   path: "cities/:cityId/destroy",
-          //   action: destroyAction,
-          //   errorElement: <div>Oops! There was an error.</div>,
-          // },
         ],
       },
     ],
