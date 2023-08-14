@@ -7,7 +7,6 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-
 export async function loader({ request }) {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
@@ -36,29 +35,39 @@ export default function Root() {
 
   return (
     <>
-      <div id="sidebar">
-        <h1>Clear Weather</h1>
-        <div>
-          <Form method="post" onSubmit={handleSubmit}>
-            <label htmlFor="q">Search cities:</label>
+      <div id="topbar" className="topbar">
+        <h1 className="topbar-title">Clear Weather</h1>
+        <div className="search-bar">
+          <Form method="post" onSubmit={handleSubmit} className="search-form">
+            <label htmlFor="q" className="search-label" hidden>
+              Search cities:
+            </label>
             <input
               id="q"
-              className={searching ? "loading" : ""}
+              className={`search-input ${searching ? "loading" : ""}`}
               aria-label="Search cities"
-              placeholder="Search"
+              placeholder="Search city"
               type="search"
               name="city"
               defaultValue={q}
             />
-            <div id="search-spinner" aria-hidden hidden={!searching} />
-            <div className="sr-only" aria-live="polite"></div>
-            <button type="submit">Submit</button>
+            <div
+              id="search-spinner"
+              className="search-spinner"
+              aria-hidden
+              hidden={!searching}
+            />
+            <button type="submit" className="search-button">
+              Submit
+            </button>
           </Form>
         </div>
       </div>
       <div
         id="detail"
-        className={navigation.state === "loading" ? "loading" : ""}
+        className={`detail-container ${
+          navigation.state === "loading" ? "loading" : ""
+        }`}
       >
         <Outlet q={q} />
       </div>
